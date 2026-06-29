@@ -3,12 +3,7 @@
 
 package com.aplorax.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -28,5 +23,38 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    // Perfil físico
+    private Double weight;
+    private Double height;
+    private Integer age;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @Enumerated(EnumType.STRING)
+    private Goal goal;
+
+    @Enumerated(EnumType.STRING)
+    private ActivityLevel activityLevel;
+
+    // Enums
+    public enum Gender {
+        MALE, FEMALE
+    }
+
+    public enum Goal {
+        LOSE_WEIGHT,
+        GAIN_MUSCLE,
+        MAINTAIN
+    }
+
+    public enum ActivityLevel {
+        SEDENTARY, // Sedentário
+        LIGHT, // Levemente ativo (1-3x/sem)
+        MODERATE, // Moderado (3-5x/sem)
+        VERY_ACTIVE, // Muito ativo (6-7x/sem)
+        ATHLETE // Atleta pesado
+    }
 
 }
