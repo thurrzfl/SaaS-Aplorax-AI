@@ -11,11 +11,16 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @Component
 public class JwtUtil {
 
-    private final String SECRET = "aplorax-secret-key-muito-segura-2025-abcdef";
-    private final long EXPIRATION = 86400000; // 24 horas em milissegundos
+    @Value("${jwt.secret}")
+    private String SECRET;
+
+    @Value("${jwt.expiration}")
+    private long EXPIRATION;
 
     private SecretKey getKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes());

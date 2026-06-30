@@ -31,12 +31,16 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
+        System.out.println("AUTH HEADER: " + authHeader);
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
+            System.out.println("TOKEN EXTRAIDO: " + token);
+            System.out.println("TOKEN VALIDO? " + jwtUtil.isTokenValid(token));
 
             if (jwtUtil.isTokenValid(token)) {
                 String email = jwtUtil.extractEmail(token);
+                System.out.println("EMAIL EXTRAIDO: " + email);
 
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                         email,
@@ -48,6 +52,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
+        } else {
+            System.out.println("HEADER NAO BATEU NA CONDICAO");
         }
 
         filterChain.doFilter(request, response);
